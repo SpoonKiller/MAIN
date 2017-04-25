@@ -108,8 +108,10 @@ void Widget::find()
 {
     char ans = 'A';
     int mx = 0;
+    qDebug() << "DanyaTupay";
     for (int i=0;i<26;++i)
     {
+        qDebug() << "YuraTupay";
         int tmp = 0;
         for (int j=0;j<45;++j)
         {
@@ -124,5 +126,7 @@ void Widget::find()
             ans = 'A' + i;
         }
     }
-    ui->lineEdit->text() = QString(ans);
+    qDebug() << "GOLUBUH";
+    ui->label->text() = QString(ans);
+    qDebug() << "KURLLLLDINI" << ans;
 }

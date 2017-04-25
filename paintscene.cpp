@@ -21,7 +21,7 @@ void paintscene::mousePressEvent(QGraphicsSceneMouseEvent *event)
                QBrush(Qt::black));
     // Сохраняем координаты точки нажатия
     previousPoint = event->scenePos();
-    img[event->scenePos().y() / 45][event->scenePos().x() / 45] = 255;
+    img[event->scenePos().y() * 45 / sceneRect().height()][event->scenePos().x() * 45 / sceneRect().width()] = 255;
 }
 
 void paintscene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
