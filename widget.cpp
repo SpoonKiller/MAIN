@@ -11,7 +11,7 @@ Widget::Widget(QWidget *parent) :
     ui->graphicsView->setScene(scene);
     teach_on = false;
     //TODO fill network with alphabet
-    network.resize(26, Neuron('A'));
+    network.resize(26, Neuron());
     for (int i=0;i<26;++i)
     {
         network[i].symbol = 'A' + i;
@@ -29,8 +29,10 @@ Widget::~Widget()
 
 void Widget::scan(char letter)
 {
-    QFile file(letter+".txt");
-    file.open(QIODevice::ReadWrite);
+    std::string str = "";
+    str += letter;
+    QFile file("C:\\Users\\Antonio\\Desktop\\MyProjects\\MAIN\\"+QString(letter)+".txt");
+    file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
 
     for (int i=0;i<45;++i)
@@ -50,9 +52,8 @@ void Widget::on_pushButton_2_clicked()
 
 void Widget::on_checkBox_stateChanged(int arg1)
 {
-    if (arg1){
-        teach_on = !teach_on;
-    }
+    teach_on = !teach_on;
+    qDebug() << "lololo";
     if (teach_on){
         ui->graphicsView->scene()->clear();
     }
@@ -78,50 +79,18 @@ void Widget::teach(char letter)
 {
     char ans = 'A';
     int mx = 0;
-    for (int i=0;i<26;++i)
+    for (int j=0;j<45;++j)
     {
-        int tmp = 0;
-        for (int j=0;j<45;++j)
+        for (int k=0;k<45;++k)
         {
-            for (int k=0;k<45;++k)
-            {
-                tmp += network[i].pic[j][k] * scene->img[j][k];
-            }
-        }
-        if (tmp > mx)
-        {
-            mx = tmp;
-            ans = 'A' + i;
-        }
-    }
-    if (ans == letter)
-    {
-        for (int j=0;j<45;++j)
-        {
-            for (int k=0;k<45;++k)
-            {
-                if (scene->img[j][k] != 0)
-                {
-                    ++network[ans - 'A'].pic[j][k];
-                }
+            if (scene->img[j][k] != 0){
+                network[letter - 'A'].pic[j][k] = network[letter-'A'].pic[j][k] + 0.5 * (255 - network[letter-'A'].pic[j][k]);
             }
         }
     }
-    else
-    {
-        for (int j=0;j<45;++j)
-        {
-            for (int k=0;k<45;++k)
-            {
-                if (scene->img[j][k] != 0)
-                {
-                    --network[ans - 'A'].pic[j][k];
-                    ++network[letter-'A'].pic[j][k];
-                }
-            }
-        }
-    }
-    QFile file(letter+".txt");
+    std::string str ="";
+    str+= letter;
+    QFile file("C:\\Users\\Antonio\\Desktop\\MyProjects\\MAIN\\"+QString(letter)+".txt");
     file.open(QIODevice::WriteOnly);
     QTextStream stream(&file);
 
@@ -129,7 +98,7 @@ void Widget::teach(char letter)
     {
         for (int j=0;j<45;++j)
         {
-            stream >> network[letter - 'A'].pic[i][j];
+            stream << network[letter - 'A'].pic[i][j];
         }
     }
     file.close();
@@ -146,7 +115,7 @@ void Widget::find()
         {
             for (int k=0;k<45;++k)
             {
-                tmp += network[i].pic[j][k] * scene->img[j][k];
+                tmp += network[i].pic[j][k];
             }
         }
         if (tmp > mx)

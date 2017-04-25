@@ -7,6 +7,7 @@
 #include <QString>
 #include <QTextStream>
 #include <QFile>
+#include <QDebug>
 
 #include "paintscene.h"
 #include <neuron.h>
