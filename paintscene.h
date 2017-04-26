@@ -4,6 +4,8 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
+#include <QImage>
+#include <QPainter>
 
 class paintscene : public QGraphicsScene
 {
@@ -13,7 +15,6 @@ class paintscene : public QGraphicsScene
 public:
     explicit paintscene(QObject *parent = 0);
     ~paintscene();
-    std::vector<std::vector<int> > img;
 
 private:
     QPointF previousPoint;

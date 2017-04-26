@@ -8,6 +8,9 @@
 #include <QTextStream>
 #include <QFile>
 #include <QDebug>
+#include <QImage>
+#include <QPainter>
+#include <QPixmap>
 
 #include "paintscene.h"
 #include <neuron.h>
@@ -43,6 +46,7 @@ private:
     Ui::Widget *ui;
     bool teach_on;
     std::vector<Neuron> network;
+    std::vector<std::vector<int> > image;
 
 };
 
